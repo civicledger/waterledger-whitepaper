@@ -6,7 +6,7 @@
 
 Access to the WaterLedger platform is only possible by prior registration, which as part of the pilot is done manually. Each participant in the pilot scheme has been added to a database, which also includes their Water Account details and available allocations.
 
-The WaterLedger application the then shows the user that they are not logged in. It is able to determine this by checking the user’s local storage for relevant keys.
+The WaterLedger application then shows the user that they are not logged in. It is able to determine this by checking the user’s local storage for relevant keys.
 
 An unauthenticated user is then able to search for any one of their Water Account numbers in a form at the top of the homepage. For privacy reasons they must also enter a code that is provided directly by the scheme organiser. The search will then retrieve their user details and water account details.
 
@@ -106,7 +106,7 @@ Though a call that only retrieves ledger data has no gas cost, there is a signif
 
 ### Shortage of Information
 
-Much of the knowledge around Solidity is based on transfer of basic tokens, or trivial book-keeping and reconciliation. Knowledge about more complex interactions like structs inside arrays, or vice versa, or better techniques for unit testing or deployment… this sot of knowledge is hard-won. Use of Ethereum as an application platform, as opposed to a basic token, is largely an untrodden path, and it is loaded with challenges and complexities.
+Much of the knowledge around Solidity is based on transfer of basic tokens, or trivial book-keeping and reconciliation. Knowledge about more complex interactions like structs inside arrays, or vice versa, or better techniques for unit testing or deployment… this sort of knowledge is hard-won. Use of Ethereum as an application platform, as opposed to a basic token, is largely an untrodden path, and it is loaded with challenges and complexities.
 
 This makes it tempting to defer or offload more challenging features, such as using an API to store the “real” data, but reconciling it against the blockchain, or returning all data, but filtering in the client.
 
