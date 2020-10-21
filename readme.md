@@ -1,4 +1,4 @@
-![Water Ledger Screenshot](https://waterledger-wp.sgp1.digitaloceanspaces.com/waterledger-screenshot.jpg)
+![Water Ledger Screenshot](https://waterledger-wp.sgp1.digitaloceanspaces.com/wl-screenshot-new.jpg)
 
 # Operation of Water Ledger
 
@@ -20,7 +20,7 @@ The user’s water licences/accounts are visible in the interface, at the bottom
 
 ## Placing a Buy or Sell Order
 
-Once registered, a user has access to place either a buy (bid) or sell (offer) order to or from the active account. Clicking on the buttons in the buy and sell listing interface enable a pop-up modal window with a form containing the price and quantity. 
+Once registered, a user has access to place either a buy (bid) or sell (offer) order to or from the active account. Clicking on the buttons in the buy and sell listing interface enable a pop-up modal window with a form containing the price and quantity.
 
 When a sell order is placed, the balance to be sold is immediately withdrawn from the allocation of the zone the user is selling in. This prevents over-selling of the water allocation.
 
@@ -44,7 +44,7 @@ As a trade is created, it adds an entry to the History smart contract, which sto
 
 The process of adding a trade to the history triggers a `HistoryAdded` event that contains all of the relevant data for the trade. This is watched by the Water Ledger NodeJS API which has a websocket connection to the History contract. When that event is triggered it begins the DAML portion of the workflow.
 
-*This section of the workflow is somewhat tentative and is still being finalised.*
+_This section of the workflow is somewhat tentative and is still being finalised._
 
 The API deploys a contract to the Ledger which is called a TradeProposal. This is due to DAML’s inherent inability to create a liability on someone else’s behalf without them approving it. Once a TradeProposal is created, the buyer is notified of the transaction, and can approve it. This then triggers the creation of a NewTrade from the details already provided. Once this is done the remainder of the workflow, specifically the callback from a payment gateway of some kind, is synthesised.
 
@@ -54,7 +54,7 @@ Once the transaction is “completed” by the liability system, the OrderBook s
 
 # Architecture
 
-![Water Ledger Screenshot](https://waterledger-wp.sgp1.digitaloceanspaces.com/Architecture.png)
+![Water Ledger Screenshot](https://waterledger-wp.sgp1.digitaloceanspaces.com/Architecture%202.0.png)
 
 ## Architecture Design Pattern
 
@@ -108,7 +108,7 @@ In particular there is a need to run imperative loops over data, often multiple 
 
 For example, attempting to retrieve all of the trades for a specific zone necessitates running a loop on all of the trades, and incrementing a counter to determine the number of matching trades. This then can be used to find the correct number trades, to create the array (which needs to be created with a set length). Only then can the code loop yet again through the trades, populating the return array.
 
-There are similar issues with sorting data, for example by price.  Sorting an array by a given field in most languages is a trivial process, however Solidity requires 15 lines of expensive code per sortable field.
+There are similar issues with sorting data, for example by price. Sorting an array by a given field in most languages is a trivial process, however Solidity requires 15 lines of expensive code per sortable field.
 
 Though a call that only retrieves ledger data has no gas cost, there is a significant maintenance and development cost associated with this highly explicit, imperative, and error-prone code.
 
@@ -132,9 +132,9 @@ The previously mentioned Truffle is a core technology for Solidity and the Ether
 
 One of the primary roles Truffle takes is that of deployment. Both in local development and in live deployment Truffle’s deployment tools can be used to create and store live instances of the smart contract.
 
-In particular, it creates a file typically called a “truffle file” this file is a large JSON file that contains the outputs from compiling the smart contract, as well as  the address of the deployed contract.
+In particular, it creates a file typically called a “truffle file” this file is a large JSON file that contains the outputs from compiling the smart contract, as well as the address of the deployed contract.
 
-This creates a number of issues. First of all, the file is extremely large, at approximately 3 megabytes. Significantly larger alone than the rest of a single page application needs to be. This is because it contains large amounts of extraneous information in a highly inefficient format.  The majority of this is an AST, the output of compiling. This has no value in a web context, and is actually duplicated, accounting for tens of thousands of lines and several megabytes.
+This creates a number of issues. First of all, the file is extremely large, at approximately 3 megabytes. Significantly larger alone than the rest of a single page application needs to be. This is because it contains large amounts of extraneous information in a highly inefficient format. The majority of this is an AST, the output of compiling. This has no value in a web context, and is actually duplicated, accounting for tens of thousands of lines and several megabytes.
 
 To overcome this we have had to create our own software, a library that opens the artefact file, then removes the unnecessary elements, and compresses the result, for around a 90% size reduction. This library has been open-sourced to the community.
 
@@ -146,7 +146,7 @@ In order to resolve this we have had to create a custom solution, creating an AP
 
 ### Gas Costs
 
-The presence of gas is an interesting idea for Ethereum. It means that while  network access is free in terms of infrastructure cost, it is an unknown cost in terms of ongoing operational costs.  Note that “gas” has a cost translatable to Ether, which itself has a direct cost in fiat currency.
+The presence of gas is an interesting idea for Ethereum. It means that while network access is free in terms of infrastructure cost, it is an unknown cost in terms of ongoing operational costs. Note that “gas” has a cost translatable to Ether, which itself has a direct cost in fiat currency.
 
 Gas costs are something of a “dark art”, notoriously difficult to calculate with accuracy. Sloppy, thoughtless, or even seemingly perfectly valid code can increate gas execution costs, and any addition of functionality naturally incurs a corresponding increase in gas costs. Optimising against these costs is an ongoing challenge, requiring specialist knowledge.
 
@@ -158,7 +158,7 @@ Gas costs also scale with the cost of gas. Ether is a volatile cryptocurrency, t
 
 Though this might seem like the above, the very fact that users need any amount of gas (ether) in their account at all is an incredible impediment to any on-boarding process.
 
-The current iteration of Water Ledger delays this issue by providing a small amount of Ether to user accounts as part of their account creation.  However, this solution is a crutch; if too much Ether is sent it is wasted, but insufficient will result in users being unable to transact. This then means developing further functionality to manage and watch and alert for user’s Ether balance.
+The current iteration of Water Ledger delays this issue by providing a small amount of Ether to user accounts as part of their account creation. However, this solution is a crutch; if too much Ether is sent it is wasted, but insufficient will result in users being unable to transact. This then means developing further functionality to manage and watch and alert for user’s Ether balance.
 
 A solution exists in the form of the Gas Station Network, which lets system operators take responsibility for gas costs on behalf of the user. However, the addition of complexity for support of this network, as well as the fees for the network itself, will add to both transaction and deployment costs.
 
@@ -217,7 +217,8 @@ As a platform option, DAML provided a compelling case, especially in terms of se
 This question of trust, accountability and transparency is a key issue for Water Ledger as a platform and deserves further discussion.
 
 # Trustlessness and Transparency
-The primary requirements of Water Ledger stem from a need for a trusted and open source of information.  While it would in theory be possible for Water Ledger to become a trusted authority,  the truest trust comes from trustlessness.
+
+The primary requirements of Water Ledger stem from a need for a trusted and open source of information. While it would in theory be possible for Water Ledger to become a trusted authority, the truest trust comes from trustlessness.
 
 Rather than requiring users, regulators, and the public to trust Water Ledger to be upfront in its data provision, we prefer that instead we use a storage mechanism that means information cannot possibly be omitted. This simply eliminates trust as a factor.
 
